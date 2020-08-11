@@ -1,0 +1,6 @@
+<IfModule mod_rewrite.c>
+DirectoryIndex index.php
+RewriteEngine on
+RewriteCond $1 !^(index\.php|images_folder|css_folder_maybe)
+RewriteRule ^(.*)$ ./index.php/$1 [L]
+</IfModule>
