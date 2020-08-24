@@ -226,6 +226,20 @@ class Order_model extends CI_Model {
 		$que=$this->db->last_query();
 		return $result;
 	}
+	public function isTodaysOrderExist($client_id,$date){
+		$this->db->select('*');
+		$this->db->from('tbl_customer_order');
+		$this->db->where('tbl_customer_order.order_for_client_id',$client_id);
+		$this->db->where('tbl_customer_order.delivery_date',$date);
+		$rslt = $this->db->get();
+		$result = $rslt->result_array();
+		$que=$this->db->last_query();
+		if (empty($result)){
+			return false;
+		}else{
+			return true;
+		}
+	}
 
 }
 /*SELECT
