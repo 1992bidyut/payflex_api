@@ -48,16 +48,16 @@ class Order_model extends CI_Model {
 		clients.client_code,
 		clients.name');
 
-		$this->db->from('`tbl_client_employee_relation` as label2');
+		$this->db->from('`employees` as label2');
 		$this->db->join('employee_info as label2_info','label2_info.id=label2.info_id', 'left');
 
-		$this->db->join('tbl_client_employee_relation as label1','label1.id = label2.parent_id', 'left');
+		$this->db->join('employees as label1','label1.id = label2.parent_id', 'left');
 		$this->db->join('employee_info as label1_info','label1_info.id=label1.info_id', 'left');
 
-		$this->db->join('tbl_client_employee_relation as label3','label3.parent_id = label2.id', 'left');
+		$this->db->join('employees as label3','label3.parent_id = label2.id', 'left');
 		$this->db->join('employee_info as label3_info','label3_info.id=label3.info_id', 'left');
 
-		$this->db->join('tbl_client_employee_relation as label4','label4.parent_id = label3.id', 'left');
+		$this->db->join('employees as label4','label4.parent_id = label3.id', 'left');
 		$this->db->join('employee_info as label4_info','label4_info.id=label4.info_id', 'left');
 
 		$this->db->join('client_info AS clients','clients.handler_id=label4.id', 'left');
@@ -259,16 +259,16 @@ clients.id as clients_id,
 clients.client_code,
 clients.name
 
-FROM `tbl_client_employee_relation` as label2
+FROM `employees` as label2
 LEFT JOIN employee_info as label2_info ON label2_info.id=label2.info_id
 
-LEFT JOIN tbl_client_employee_relation as label1 ON label1.id = label2.parent_id
+LEFT JOIN employees as label1 ON label1.id = label2.parent_id
 LEFT JOIN employee_info as label1_info ON label1_info.id=label1.info_id
 
-LEFT JOIN tbl_client_employee_relation as label3 ON label3.parent_id = label2.id
+LEFT JOIN employees as label3 ON label3.parent_id = label2.id
 LEFT JOIN employee_info as label3_info ON label3_info.id=label3.info_id
 
-LEFT JOIN tbl_client_employee_relation as label4 ON label4.parent_id = label3.id
+LEFT JOIN employees as label4 ON label4.parent_id = label3.id
 LEFT JOIN employee_info as label4_info ON label4_info.id=label4.info_id
 
 LEFT JOIN client_info AS clients ON clients.handler_id=label4.id

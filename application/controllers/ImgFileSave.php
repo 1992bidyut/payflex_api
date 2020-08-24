@@ -42,7 +42,7 @@ class ImgFileSave extends CI_Controller
 			// die('bhejal');
 		 }
 		 else
-		 { 
+		 {
 			 try
 			 {
 
@@ -60,14 +60,13 @@ class ImgFileSave extends CI_Controller
 				$fileType = $_POST['image_type'];
 				//$order_code=$_POST['order_code'];
 				$payment_id=$_POST['payment_id'];
-			
-				$server_url= dirname(__FILE__); 
-
+				
 				$userData=$this->login_model->getUser($username,sha1($password));
 				$user_id=$userData[0]['id'];
 				$clientData=$this->login_model->getClientUserInfo($user_id);
 			    $client_id=$clientData[0]['client_id'];
-
+			
+				$server_url= dirname(__FILE__); 
 				// die($server_url);
 				//$folder_path = $server_url.'//..//..//..//recorder.onuserver.com';
 				$folder_path = '/home/demoonuserver/public_html/payFlex/asset/images';
@@ -96,8 +95,7 @@ class ImgFileSave extends CI_Controller
 				
 				if(move_uploaded_file($_FILES['uploaded_file']['tmp_name'],$uploadTo))	
 				{	
-					$resonseStatus = 4000 ;
-					$resonseReason = 'File uploaded';
+					$resonseStatus = 202 ;
 					$request_file_size = $_FILES['uploaded_file']['size'];
 					$file_size = filesize($uploadTo);
 					$fileExists = file_exists($uploadTo);
@@ -116,13 +114,16 @@ class ImgFileSave extends CI_Controller
 
 					if ($this->payment_model->isPaymentImagRelationExist($payment_id)) {
 						$this->payment_model->updatePaymentImagRelation($relation);
+						$resonseReason = 'Image File Updated';
 					}else{
 						$this->payment_model->savePaymentImagRelation($relation);
+						$resonseReason = 'File uploaded';
 					}
 
 					$responseContent['status'] = $resonseStatus;
 					$responseContent['info'] = $resonseReason;
 					$responseContent['file_name'] = $trxid;
+					$responseContent['client_id'] = $client_id;
 	                $responseContent['request_file_size'] = $request_file_size;
 					$responseContent['file_size'] = $file_size;
 					$responseContent['file_exists'] = $fileExists;
@@ -130,6 +131,7 @@ class ImgFileSave extends CI_Controller
 					$responseContent['status'] = 302;
 					$responseContent['info'] = "file not uploaded";
 					$responseContent['file_name'] = $trxid;
+					$responseContent['client_id'] = $client_id;
 	                $responseContent['request_file_size'] = 0;
 					$responseContent['file_size'] = 0;
 					$responseContent['file_exists'] = false;

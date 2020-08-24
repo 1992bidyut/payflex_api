@@ -20,15 +20,15 @@ class GetOrderPaymentList extends REST_Controller
 	}
 
 	protected $rest_format   = 'application/json';
-	var $userName, $userPass;
+	var $userName;
 
 	function _perform_library_auth( $email = '', $password = NULL)
 	{			
 		$CI = get_instance();
 		$CI->load->library('encrypt');
 		$CI->load->model('login_model');
-
-		$this->userPass=$password;
+        
+        $this->userPass=$password;
 		$password = sha1($password);
 		$this->userName=$email;
 
@@ -54,7 +54,7 @@ class GetOrderPaymentList extends REST_Controller
 		$requestData = json_decode(file_get_contents('php://input'),true);
 		$client_id=$requestData['client_id'];
 		$order_code=$requestData['order_code'];
-
+		
 		$userData=$this->login_model->getUser($this->userName,sha1($this->userPass));
 		$user_id=$userData[0]['id'];
 		$clientData=$this->login_model->getClientUserInfo($user_id);

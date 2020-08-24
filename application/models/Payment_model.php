@@ -18,13 +18,14 @@ class Payment_model extends CI_Model
 		$result = $rslt->result_array();
 		return $result;
 	}
+	
 
 	public function savePayment($data){
 		$this->db->insert('tbl_payment', $data);
 		$Info = $this->db->insert_id();
 		return $Info;
 	}
-
+	
 	public function updatePayment($data){
 		$this->db->where('tbl_payment.trxid', $data['trxid']);
 		if ($this->db->update('tbl_payment', $data)) {
@@ -47,10 +48,8 @@ class Payment_model extends CI_Model
 	public function getPaymentList($order_code){
 		$this->db->select('tbl_payment.*,
 			tbl_financial_institution_list.bank_name,
-			tbl_payment_mode.methode_name,
-			tbl_payment_mode.custom_methode,
-			tbl_image.trxid as img_trxid,
-			tbl_image.image_name');
+			tbl_payment_mode.methode_name,tbl_payment_mode.custom_methode,
+			tbl_image.trxid as img_trxid,tbl_image.image_name');
 		$this->db->from("tbl_payment");
 		$this->db->join('tbl_financial_institution_list','tbl_payment.financial_institution_id=tbl_financial_institution_list.id', 'left');
 		$this->db->join('tbl_payment_mode','tbl_payment.payment_mode_id=tbl_payment_mode.id', 'left');
@@ -74,7 +73,7 @@ class Payment_model extends CI_Model
 		$Info = $this->db->insert_id();
 		return $Info;
 	}
-
+	
 	public function updatePaymentImagRelation($data3){
 		$this->db->where('tbl_payment_image_relation.payment_id', $data3['payment_id']);
 		if ($this->db->update('tbl_payment_image_relation', $data3)) {
@@ -92,9 +91,9 @@ class Payment_model extends CI_Model
 		$rslt = $this->db->get();
 		$result = $rslt->result_array();
 		if (empty($result)) {
-			return true;
-		}else{
 			return false;
+		}else{
+			return true;
 		}
 	}
 

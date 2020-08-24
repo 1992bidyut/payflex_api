@@ -1,4 +1,4 @@
-0<?php
+<?php
 
 /**
  * This controller created by Bidyut, 04/04/2020
