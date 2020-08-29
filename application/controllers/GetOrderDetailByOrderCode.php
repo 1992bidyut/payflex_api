@@ -70,5 +70,5 @@ class GetOrderDetailByOrderCode extends REST_Controller
 
 		$this->response(json_encode($response), 202);
 	}
-
+//
 }
