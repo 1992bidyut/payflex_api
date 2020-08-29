@@ -95,6 +95,7 @@ class Update_order extends REST_Controller
 
 			if(!empty($res)){
 				$response['message'] = "Successfully updated data";
+				$response['total_amount'] = $total_amount;
 			} else {
 				$response['message'] = "Failed to updated data";
 			}
