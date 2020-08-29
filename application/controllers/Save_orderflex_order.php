@@ -53,7 +53,7 @@ class Save_orderflex_order extends REST_Controller
 		$order_detail=$requestData['order_detail'];
 		$customer_order=$requestData['customer_order'];
 
-		$length = count($order_detail);//
+		$length = count($order_detail);
 		$i = 0;
 		$response = array();
 
