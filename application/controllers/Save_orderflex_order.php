@@ -18,6 +18,7 @@ class Save_orderflex_order extends REST_Controller
 		$this->load->helper('url');
 		$this->load->model('login_model');
 		$this->load->model('order_model');//amount add
+		$this->load->model('update_order_model');
 	}
 	protected $rest_format   = 'application/json';
 
@@ -57,11 +58,14 @@ class Save_orderflex_order extends REST_Controller
 		$i = 0;
 		$response = array();
 
-		if ($this->order_model->isTodaysOrderExist($customer_order['order_for_client_id'],$customer_order['delivery_date'])){
-			$response['message'] = "Already order taken";
-		}else{
+//		if ($this->order_model->isTodaysOrderExist($customer_order['order_for_client_id'],$customer_order['delivery_date'])){
+//			$response['message'] = "Already order taken";
+//		}else
+			{
 			$order_index=$this->save_order_model->createdNewCustomerOrder($customer_order);
 			//echo $order_index;
+
+			$total_amount=0;
 
 			if ($order_index>0 && $order_index!=null) {
 				for ($i=0;$i<$length;$i++){
@@ -79,8 +83,13 @@ class Save_orderflex_order extends REST_Controller
 						'customer_order_id'=>$order_index,
 						'ordered_amount'=>$ordered_amount//amount add
 					);
+					$total_amount=$total_amount+$ordered_amount;
 					$res = $this->save_order_model->insertOrderTable($data);
 				}
+
+				//update customer order
+				$orderData['total_costs']=$total_amount;
+				$this->update_order_model->updateCustomerOrderTable($orderData,$order_index);
 
 				if(!empty($res) ){
 					$response['message'] = "Successfully saved data";

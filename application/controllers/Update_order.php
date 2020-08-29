@@ -78,6 +78,7 @@ class Update_order extends REST_Controller
 
 				$txID = $requestData[$i]['txid'];
 				$isValidTxid = $this->update_order_model->trxId($txID);
+
 				if($isValidTxid == true) {
 					// var_dump("data:  " ,$data);
 					$res = $this->update_order_model->updateOrderTable($data, $txID);

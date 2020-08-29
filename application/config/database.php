@@ -73,47 +73,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-$db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'demoonuserver_payflex',
-	'password' => 'payFlexP@$5',
-	'database' => 'demoonuserver_payflex',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
 
-/*db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'demo.onuserver.com',
-	'username' => 'demoonuserver_totalforecast',
-	'password' => 't0t@1f0rec@st',
-	'database' => 'demoonuserver_total_forecast',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);*/
+$db['default']['hostname'] = "localhost";
+$db['default']['username'] = "root";
+$db['default']['password'] = "";
+$db['default']['database'] = "payflex_1v1";
+$db['default']['dbdriver'] = "mysqli";
+$db['default']['dbprefix'] = "";
+$db['default']['pconnect'] = TRUE;
+$db['default']['db_debug'] = TRUE;
+$db['default']['cache_on'] = FALSE;
+$db['default']['cachedir'] = "";
+$db['default']['char_set'] = "utf8mb4";
+$db['default']['dbcollat'] = "utf8mb4_unicode_ci";
+
+//$db['default']['hostname'] = "localhost";
+//$db['default']['username'] = "demoonuserver_payflex";
+//$db['default']['password'] = "payFlexP@$5";
+//$db['default']['database'] = "demoonuserver_payflex";
+//$db['default']['dbdriver'] = "mysqli";
+//$db['default']['dbprefix'] = "";
+//$db['default']['pconnect'] = TRUE;
+//$db['default']['db_debug'] = TRUE;
+//$db['default']['cache_on'] = FALSE;
+//$db['default']['cachedir'] = "";
+//$db['default']['char_set'] = "utf8mb4";
+//$db['default']['dbcollat'] = "utf8mb4_unicode_ci";
+
+
+?>
 
