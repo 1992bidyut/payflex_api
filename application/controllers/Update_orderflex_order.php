@@ -72,7 +72,8 @@ class Update_orderflex_order extends REST_Controller
 					'delevary_date' => $requestData[$i]['delevary_date'],
 					'plant' => $requestData[$i]['plant'],
 					'taking_date' => $requestData[$i]['taking_date'],
-					'order_type' => $requestData[$i]['order_type']
+					'order_type' => $requestData[$i]['order_type'],
+					'ordered_amount'=>$ordered_amount
 				);
 
 				$txID = $requestData[$i]['txid'];

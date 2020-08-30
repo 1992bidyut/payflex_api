@@ -58,10 +58,10 @@ class Save_orderflex_order extends REST_Controller
 		$i = 0;
 		$response = array();
 
-//		if ($this->order_model->isTodaysOrderExist($customer_order['order_for_client_id'],$customer_order['delivery_date'])){
-//			$response['message'] = "Already order taken";
-//		}else
-			{
+////		if ($this->order_model->isTodaysOrderExist($customer_order['order_for_client_id'],$customer_order['delivery_date'])){
+////			$response['message'] = "Already order taken";
+////		}else
+//			{
 			$order_index=$this->save_order_model->createdNewCustomerOrder($customer_order);
 			//echo $order_index;
 
@@ -101,7 +101,7 @@ class Save_orderflex_order extends REST_Controller
 				$response['message'] = "Failed to save data";
 				$this->save_order_model->deletCustomerOrder($order_index);
 			}
-		}
+//		}
 
 		$this->response(json_encode($response), 202);
 	}

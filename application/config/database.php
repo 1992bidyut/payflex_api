@@ -74,18 +74,18 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 
-//$db['default']['hostname'] = "localhost";
-//$db['default']['username'] = "root";
-//$db['default']['password'] = "";
-//$db['default']['database'] = "payflex_1v1";
-//$db['default']['dbdriver'] = "mysqli";
-//$db['default']['dbprefix'] = "";
-//$db['default']['pconnect'] = TRUE;
-//$db['default']['db_debug'] = TRUE;
-//$db['default']['cache_on'] = FALSE;
-//$db['default']['cachedir'] = "";
-//$db['default']['char_set'] = "utf8mb4";
-//$db['default']['dbcollat'] = "utf8mb4_unicode_ci";
+$db['default']['hostname'] = "localhost";
+$db['default']['username'] = "root";
+$db['default']['password'] = "";
+$db['default']['database'] = "payflex_1v1";
+$db['default']['dbdriver'] = "mysqli";
+$db['default']['dbprefix'] = "";
+$db['default']['pconnect'] = TRUE;
+$db['default']['db_debug'] = TRUE;
+$db['default']['cache_on'] = FALSE;
+$db['default']['cachedir'] = "";
+$db['default']['char_set'] = "utf8mb4";
+$db['default']['dbcollat'] = "utf8mb4_unicode_ci";
 
 $db['default']['hostname'] = "localhost";
 $db['default']['username'] = "demoonuserver_payflex";
