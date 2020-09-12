@@ -78,6 +78,7 @@ class Update_order extends REST_Controller
 
 				$txID = $requestData[$i]['txid'];
 				$isValidTxid = $this->update_order_model->trxId($txID);
+
 				if($isValidTxid == true) {
 					// var_dump("data:  " ,$data);
 					$res = $this->update_order_model->updateOrderTable($data, $txID);
@@ -94,6 +95,7 @@ class Update_order extends REST_Controller
 
 			if(!empty($res)){
 				$response['message'] = "Successfully updated data";
+				$response['total_amount'] = $total_amount;
 			} else {
 				$response['message'] = "Failed to updated data";
 			}

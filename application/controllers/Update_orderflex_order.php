@@ -17,6 +17,7 @@ class Update_orderflex_order extends REST_Controller
 		$this->load->model('update_order_model');
 		$this->load->helper('url');
 		$this->load->model('login_model');
+		$this->load->model('order_model');
 	}
 	protected $rest_format   = 'application/json';
 
@@ -54,8 +55,15 @@ class Update_orderflex_order extends REST_Controller
 		$i = 0;
 		$res = false;
 		$response = array();
+
+		$total_amount=0;
+		$order_index=$this->update_order_model->getCustomerOrderId($requestData[0]['txid']);
 		
 			for ($i=0;$i<$length;$i++){
+
+				$price=$this->order_model->getProductRate($requestData[$i]['product_id']);//amount add
+				$ordered_amount=$requestData[$i]['quantityes']*$price[0]['p_wholesalePrice'];//amount add
+
 				$data = array(
 					'product_id' => $requestData[$i]['product_id'],
 					'quantityes' => $requestData[$i]['quantityes'],
@@ -64,7 +72,8 @@ class Update_orderflex_order extends REST_Controller
 					'delevary_date' => $requestData[$i]['delevary_date'],
 					'plant' => $requestData[$i]['plant'],
 					'taking_date' => $requestData[$i]['taking_date'],
-					'order_type' => $requestData[$i]['order_type']
+					'order_type' => $requestData[$i]['order_type'],
+					'ordered_amount'=>$ordered_amount
 				);
 
 				$txID = $requestData[$i]['txid'];
@@ -76,7 +85,12 @@ class Update_orderflex_order extends REST_Controller
 				else {
 					$response['message'] = "Transaction id does not match";
 				}
+				$total_amount=$total_amount+$ordered_amount;
 			}
+
+			//update customer order
+			$orderData['total_costs']=$total_amount;
+			$this->update_order_model->updateCustomerOrderTable($orderData,$order_index);
 
 			if(!empty($res)){
 				$response['message'] = "Successfully updated data";

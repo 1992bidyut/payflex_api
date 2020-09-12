@@ -189,6 +189,35 @@ class Order_model extends CI_Model {
 
 	}
 
+	public function getOrderDetailsByOrderCode($client_id,$order_code){
+		$this->db->select('tbl_customer_order.*,
+			order_details.txid,
+			order_details.id as product_order_id, 
+			order_details.order_type, 
+			order_details.plant,
+			order_details.quantityes,
+			product_details.id as product_id,
+			product_details.p_name,
+			product_details.p_type,
+			tbl_product_price.p_retailPrice,
+			tbl_product_price.p_wholesalePrice,
+			tbl_product_price.p_specialPrice,
+			product_details.p_discription');
+		$this->db->from('`tbl_customer_order`');
+		$this->db->join('order_details','tbl_customer_order.id=order_details.customer_order_id', 'left');
+		$this->db->join('product_details','order_details.product_id=product_details.id', 'left');
+		$this->db->join('tbl_product_price','tbl_product_price.product_id=product_details.id', 'left');
+		$this->db->where('order_for_client_id', $client_id);
+		$this->db->where('order_code', $order_code);
+		$this->db->where('order_type', 2);
+		$this->db->where('tbl_product_price.is_active', 1);
+		$rslt = $this->db->get();
+		$result = $rslt->result_array();
+		//echo print_r($result);
+		//echo json_encode($result);
+		return $result;
+	}
+
 	public function getClientOrderDetails($client_id,$delivery_date){
 		$this->db->select('tbl_customer_order.*,
 			order_details.txid,
@@ -216,6 +245,18 @@ class Order_model extends CI_Model {
 		//echo print_r($result);
 		//echo json_encode($result);
 		return $result;
+	}
+
+	public function getOnlyOrderList($client_id,$start_date,$end_date){
+		$query="SELECT * 
+		FROM tbl_customer_order 
+		WHERE order_for_client_id= '".$client_id."' 
+		and delivery_date>= '".$start_date."'
+		and delivery_date <= '".$end_date."'";
+		$resource = $this->db->query($query);
+		// echo $this->db->last_query();
+		// die();
+		return $resource->result_array();
 	}
 	public function checkDuplicateOrder($id){
 		$this->db->select('*');

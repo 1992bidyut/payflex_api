@@ -9,6 +9,7 @@
 class Client_model extends CI_Model{
 	private $avgFlag=false;
 	//calling functions
+
 	public function getClientDetails($id){
 		$this->db->select('*');
 		$this->db->from('client_info');
@@ -16,6 +17,24 @@ class Client_model extends CI_Model{
 		$rslt = $this->db->get();
 		$result = $rslt->result_array();
 		return $result;
+	}
+
+	public function getClientsList(){
+		$this->db->select('*');
+		$this->db->from('client_info');
+		$rslt = $this->db->get();
+		$result = $rslt->result_array();
+		return $result;
+	}
+
+	public function updateClintInfo($data, $id){
+		$this->db->where('client_info.id', $id);
+		if ($this->db->update('client_info', $data)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public function getClientContact($id){
