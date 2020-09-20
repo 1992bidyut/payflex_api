@@ -31,10 +31,13 @@ class SavePaymentData extends REST_Controller
 		$password = sha1($password);
 
 		$isValidUser = $this->login_model->getUser($email, $password);
-		
+		$response=array();
 		if(empty($isValidUser)){
-			$resonseText = "errorLogin";
-			$this->response($resonseText, 401); 
+			$response['inserted_code']=null;
+			$response['message']="Login error!";
+			$response['isSuccessfull']=false;
+			$response['trxid']=null;
+			$this->response($response, 401);
 			return false;
 		}
 		else{
@@ -61,7 +64,7 @@ class SavePaymentData extends REST_Controller
 		// $isValidUser = $this->login_model->getUser($username, $password);
 		$response = array();
 
-		// if(!empty($isValidUser)){
+		if(!$this->payment_model->isReferenceExist($data['reference_no'])){
 			$id = $this->payment_model->savePayment($data);
 
 			$flag_data=array();
@@ -70,8 +73,16 @@ class SavePaymentData extends REST_Controller
 
 			$response['trxid']=$data['trxid'];
 			$response['inserted_code']=$id;
+			$response['message']="Payment Saved!";
+			$response['isSuccessfull']=true;
 			$this->response(json_encode($response),202);
-		//}
+		}else{
+			$response['trxid']=$data['trxid'];
+			$response['inserted_code']=null;
+			$response['message']="Duplicate payment reference!";
+			$response['isSuccessfull']=false;
+			$this->response(json_encode($response),202);
+		}
 
 		//$this->response(json_encode($response), 200);
 	}

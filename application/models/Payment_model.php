@@ -36,6 +36,20 @@ class Payment_model extends CI_Model
 		}
 	}
 
+	public function isReferenceExist($refNo){
+		$this->db->select('*');
+		$this->db->from('tbl_payment');
+		$this->db->where('tbl_payment.reference_no', $refNo);
+		$rslt = $this->db->get();
+		$result = $rslt->result_array();
+		$size=count($result);
+		if ($size>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	public function getPaymentStatus($data){
 		$this->db->select('*');
 		$this->db->from('tbl_payment');
