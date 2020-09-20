@@ -102,7 +102,7 @@ class ImgFileSave extends CI_Controller
 					$fileExists = file_exists($uploadTo);
 					
 					$imgInfo['trxid']=$trxid;
-					$imgInfo['image_name']=$trxid.".jpg";
+					$imgInfo['image_name']=$trxid.'.'.$devide[1];
 					$imgInfo['user_id']=$userID;
 					$imgInfo['request_time']=$request_time;
 					$imgInfo['upload_time']=$request_time;
@@ -124,6 +124,7 @@ class ImgFileSave extends CI_Controller
 					$responseContent['status'] = $resonseStatus;
 					$responseContent['info'] = $resonseReason;
 					$responseContent['file_name'] = $trxid;
+					$responseContent['file_extension'] = $devide[1];
 					$responseContent['client_id'] = $client_id;
 	                $responseContent['request_file_size'] = $request_file_size;
 					$responseContent['file_size'] = $file_size;
@@ -132,6 +133,7 @@ class ImgFileSave extends CI_Controller
 					$responseContent['status'] = 302;
 					$responseContent['info'] = "file not uploaded";
 					$responseContent['file_name'] = $trxid;
+					$responseContent['file_extension'] = $devide[1];
 					$responseContent['client_id'] = $client_id;
 	                $responseContent['request_file_size'] = 0;
 					$responseContent['file_size'] = 0;
