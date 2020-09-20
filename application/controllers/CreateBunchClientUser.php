@@ -44,14 +44,14 @@ class CreateBunchClientUser extends REST_Controller{
 		$clientList=$this->client_model->getClientsList();
 
 		foreach ($clientList as $client){
-//			$userdata=array();
-//			$getDate= date("Y-m-d");
-//			$userdata['username']=$client['client_code']."@total";
-//			$userdata['password']=sha1("abcdtotal");
-//			$userdata['created_time']=$getDate;
-//			$userdata['user_type']=3;
-//			$insertIndex=$this->userModel->insertUserCredential($userdata);
-			$client['virtual_account_no']="77072".$client['client_code'];
+			$userdata=array();
+			$getDate= date("Y-m-d");
+			$userdata['username']=$client['client_code']."@total";
+			$userdata['password']=sha1("abcdtotal");
+			$userdata['created_time']=$getDate;
+			$userdata['user_type']=3;
+			$insertIndex=$this->userModel->insertUserCredential($userdata);
+			$client['user_id']=$insertIndex;
 			$this->client_model->updateClintInfo($client,$client['id']);
 		}
 		echo json_encode($clientList);

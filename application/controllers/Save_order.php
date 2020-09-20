@@ -50,19 +50,18 @@ class Save_order extends REST_Controller
 			$requestData = $this->input->post();
 		}
 		$requestData = json_decode(file_get_contents('php://input'),true);
-		$orderDetails=$requestData['order_details'];
 
 		$length = count($requestData);
 		$i = 0;
 		$response = array();
-		//commented for custom order code
+
 		$orderData = array(
-			'taking_date' => $requestData['taking_date'],
-			'delivery_date' => $requestData['delevary_date'],
+			'taking_date' => $requestData[0]['taking_date'],
+			'delivery_date' => $requestData[0]['delevary_date'],
 			//'insert_date_time' => "",
-			'order_code' => $requestData['txid'],
-			'taker_id' => $requestData['taker_id'],
-			'order_for_client_id' => $requestData['client_id'],
+			'order_code' => $requestData[0]['txid'],
+			'taker_id' => $requestData[0]['taker_id'],
+			'order_for_client_id' => $requestData[0]['client_id'],
 			);
 
 		$order_index=$this->save_order_model->createdNewCustomerOrder($orderData);
