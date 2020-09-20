@@ -195,6 +195,7 @@ class Order_model extends CI_Model {
 			order_details.id as product_order_id, 
 			order_details.order_type, 
 			order_details.plant,
+			plant_detail.plant as plantName,
 			order_details.quantityes,
 			product_details.id as product_id,
 			product_details.p_name,
@@ -207,6 +208,7 @@ class Order_model extends CI_Model {
 		$this->db->join('order_details','tbl_customer_order.id=order_details.customer_order_id', 'left');
 		$this->db->join('product_details','order_details.product_id=product_details.id', 'left');
 		$this->db->join('tbl_product_price','tbl_product_price.product_id=product_details.id', 'left');
+		$this->db->join('plant_detail','order_details.plant=plant_detail.id', 'left');
 		$this->db->where('order_for_client_id', $client_id);
 		$this->db->where('order_code', $order_code);
 		$this->db->where('order_type', 2);
