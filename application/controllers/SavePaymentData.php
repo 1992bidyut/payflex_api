@@ -61,7 +61,6 @@ class SavePaymentData extends REST_Controller
 				$flag_data=array();
 				$flag_data['payment_status']=1;
 				$this->Update_order_model->updatePaymentFlag($flag_data,$data['order_code']);
-
 				$response['trxid']=$data['trxid'];
 				$response['inserted_code']=$id;
 				$response['message']="Payment Saved!";
