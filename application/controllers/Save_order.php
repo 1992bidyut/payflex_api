@@ -50,18 +50,19 @@ class Save_order extends REST_Controller
 			$requestData = $this->input->post();
 		}
 		$requestData = json_decode(file_get_contents('php://input'),true);
-
-		$length = count($requestData);
+		$order_Details=$requestData['order_detail'];
+		$length = count($order_Details);
 		$i = 0;
 		$response = array();
 
 		$orderData = array(
-			'taking_date' => $requestData[0]['taking_date'],
-			'delivery_date' => $requestData[0]['delevary_date'],
+			'taking_date' => $requestData['taking_date'],
+			'delivery_date' => $requestData['delivery_date'],
 			//'insert_date_time' => "",
-			'order_code' => $requestData[0]['txid'],
-			'taker_id' => $requestData[0]['taker_id'],
-			'order_for_client_id' => $requestData[0]['client_id'],
+			'order_code' => $requestData['order_code'],
+			'trxid' => $requestData['trxid'],
+			'taker_id' => $requestData['taker_id'],
+			'order_for_client_id' => $requestData['order_for_client_id'],
 			);
 
 		$order_index=$this->save_order_model->createdNewCustomerOrder($orderData);
@@ -74,18 +75,18 @@ class Save_order extends REST_Controller
 
 			for ($i=0;$i<$length;$i++){
 				
-				$price=$this->order_model->getProductRate($requestData[$i]['product_id']);//amount add
-				$ordered_amount=$requestData[$i]['quantityes']*$price[0]['p_wholesalePrice'];//amount add
+				$price=$this->order_model->getProductRate($order_Details[$i]['product_id']);//amount add
+				$ordered_amount=$order_Details[$i]['quantityes']*$price[0]['p_wholesalePrice'];//amount add
 
-				$data = array('txid' => $requestData[$i]['txid'],
-					'product_id' => $requestData[$i]['product_id'],
-					'quantityes' => $requestData[$i]['quantityes'],
-					'client_id' => $requestData[$i]['client_id'],
-					'taker_id' => $requestData[$i]['taker_id'],
-					'delevary_date' => $requestData[$i]['delevary_date'],
-					'plant' => $requestData[$i]['plant'],
-					'taking_date' => $requestData[$i]['taking_date'],
-					'order_type' => $requestData[$i]['order_type'],
+				$data = array('txid' => $order_Details[$i]['txid'],
+					'product_id' => $order_Details[$i]['product_id'],
+					'quantityes' => $order_Details[$i]['quantityes'],
+					'client_id' => $order_Details[$i]['client_id'],
+					'taker_id' => $order_Details[$i]['taker_id'],
+					'delevary_date' => $order_Details[$i]['delevary_date'],
+					'plant' => $order_Details[$i]['plant'],
+					'taking_date' => $order_Details[$i]['taking_date'],
+					'order_type' => $order_Details[$i]['order_type'],
 					'customer_order_id'=>$order_index,
 					'ordered_amount'=>$ordered_amount//amount add
 				);
