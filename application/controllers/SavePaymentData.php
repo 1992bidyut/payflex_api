@@ -17,7 +17,7 @@ class SavePaymentData extends REST_Controller
 		$this->load->model('payment_model');
 		$this->load->helper('url');
 		$this->load->model('login_model');
-		$this->load->model('Update_order_model');
+		$this->load->model('Update_order_model');//
 	}
 
 	protected $rest_format   = 'application/json';
