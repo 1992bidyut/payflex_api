@@ -16,8 +16,17 @@ class Update_order_model extends CI_Model
 	}
 	
 	public function updateCustomerOrderTable($data, $id){
-	    
 		$this->db->where('tbl_customer_order.id', $id);
+		if ($this->db->update('tbl_customer_order', $data)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public function updatePaymentFlag($data, $order_code){
+		$this->db->where('tbl_customer_order.order_code', $order_code);
 		if ($this->db->update('tbl_customer_order', $data)) {
 			return true;
 		}

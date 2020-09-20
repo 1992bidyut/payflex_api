@@ -19,6 +19,7 @@ class Save_orderflex_order extends REST_Controller
 		$this->load->model('login_model');
 		$this->load->model('order_model');//amount add
 		$this->load->model('update_order_model');
+		$this->load->model('Client_model');
 	}
 	protected $rest_format   = 'application/json';
 
@@ -62,48 +63,62 @@ class Save_orderflex_order extends REST_Controller
 ////			$response['message'] = "Already order taken";
 ////		}else
 //			{
-			$order_index=$this->save_order_model->createdNewCustomerOrder($customer_order);
-			//echo $order_index;
+		//make order code for OrderFlex orders
+		$client_details=$this->Client_model->getClientDetailsByID($customer_order['order_for_client_id']);
+		$client_code=$client_details['client_code'];
+//		echo $client_code;
+		$code=$client_code."-".$this->getServerDate().'-1';
+		$customer_order['trxid']=$customer_order['order_code'];
+		$customer_order['order_code']=$code;
+		$order_index=$this->save_order_model->createdNewCustomerOrder($customer_order);
+		//echo $order_index;
 
-			$total_amount=0;
+		$total_amount=0;
 
-			if ($order_index>0 && $order_index!=null) {
-				for ($i=0;$i<$length;$i++){
-					$price=$this->order_model->getProductRate($order_detail[$i]['product_id']);//amount add
-					$ordered_amount=$order_detail[$i]['quantityes']*$price[0]['p_wholesalePrice'];//amount add
-					$data = array('txid' => $order_detail[$i]['txid'],
-						'product_id' => $order_detail[$i]['product_id'],
-						'quantityes' => $order_detail[$i]['quantityes'],
-						'client_id' => $order_detail[$i]['client_id'],
-						'taker_id' => $order_detail[$i]['taker_id'],
-						'delevary_date' => $order_detail[$i]['delevary_date'],
-						'plant' => $order_detail[$i]['plant'],
-						'taking_date' => $order_detail[$i]['taking_date'],
-						'order_type' => $order_detail[$i]['order_type'],
-						'customer_order_id'=>$order_index,
-						'ordered_amount'=>$ordered_amount//amount add
-					);
-					$total_amount=$total_amount+$ordered_amount;
-					$res = $this->save_order_model->insertOrderTable($data);
-				}
+		if ($order_index>0 && $order_index!=null) {
+			for ($i=0;$i<$length;$i++){
+				$price=$this->order_model->getProductRate($order_detail[$i]['product_id']);//amount add
+				$ordered_amount=$order_detail[$i]['quantityes']*$price[0]['p_wholesalePrice'];//amount add
+				$data = array('txid' => $order_detail[$i]['txid'],
+					'product_id' => $order_detail[$i]['product_id'],
+					'quantityes' => $order_detail[$i]['quantityes'],
+					'client_id' => $order_detail[$i]['client_id'],
+					'taker_id' => $order_detail[$i]['taker_id'],
+					'delevary_date' => $order_detail[$i]['delevary_date'],
+					'plant' => $order_detail[$i]['plant'],
+					'taking_date' => $order_detail[$i]['taking_date'],
+					'order_type' => $order_detail[$i]['order_type'],
+					'customer_order_id'=>$order_index,
+					'ordered_amount'=>$ordered_amount//amount add
+				);
+				$total_amount=$total_amount+$ordered_amount;
+				$res = $this->save_order_model->insertOrderTable($data);
+			}
 
-				//update customer order
-				$orderData['total_costs']=$total_amount;
-				$this->update_order_model->updateCustomerOrderTable($orderData,$order_index);
+			//update customer order
+			$orderData['total_costs']=$total_amount;
+			$this->update_order_model->updateCustomerOrderTable($orderData,$order_index);
 
-				if(!empty($res) ){
-					$response['message'] = "Successfully saved data";
-				} else {
-					$response['message'] = "Failed to save data";
-					$this->save_order_model->deletCustomerOrder($order_index);
-				}
-			}else{
+			if(!empty($res) ){
+				$response['message'] = "Successfully saved data";
+			} else {
 				$response['message'] = "Failed to save data";
 				$this->save_order_model->deletCustomerOrder($order_index);
 			}
+		}else{
+			$response['message'] = "Failed to save data";
+			$this->save_order_model->deletCustomerOrder($order_index);
+		}
 //		}
 
 		$this->response(json_encode($response), 202);
+	}
+
+	private function getServerDate(){
+		$getDate= date("Y-m-d H:m:s");
+		$getDate = strtotime($getDate);
+		$getDate = strtotime("-0 h", $getDate);
+		return $getDate=date("dmy", $getDate);
 	}
 
 }

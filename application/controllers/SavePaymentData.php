@@ -17,6 +17,7 @@ class SavePaymentData extends REST_Controller
 		$this->load->model('payment_model');
 		$this->load->helper('url');
 		$this->load->model('login_model');
+		$this->load->model('Update_order_model');
 	}
 
 	protected $rest_format   = 'application/json';
@@ -50,24 +51,17 @@ class SavePaymentData extends REST_Controller
 		}
 		$requestData = json_decode(file_get_contents('php://input'),true);
 
-		//echo $requestData;
-		// $username = $this->input->get_request_header('username');
-		// $password = $this->input->get_request_header('password');
-		// $username=$requestData['username'];
-		// $password=$requestData['password'];
 		$data=$requestData;
 
-		// $isValidUser = $this->login_model->getUser($username, $password);
 		$response = array();
-
-		// if(!empty($isValidUser)){
 			$id = $this->payment_model->savePayment($data);
+			$flag_data=array();
+			$flag_data['payment_status']=1;
+			$this->Update_order_model->updatePaymentFlag($flag_data,$data['order_code']);
+
 			$response['trxid']=$data['trxid'];
 			$response['inserted_code']=$id;
 			$this->response(json_encode($response),202);
-		//}
-
-		//$this->response(json_encode($response), 200);
 	}
 
 }

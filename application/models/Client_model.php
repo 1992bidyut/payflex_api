@@ -18,6 +18,14 @@ class Client_model extends CI_Model{
 		$result = $rslt->result_array();
 		return $result;
 	}
+	public function getClientDetailsByID($id){
+		$this->db->select('*');
+		$this->db->from('client_info');
+		$this->db->like('client_info.id',$id,'after');
+		$rslt = $this->db->get();
+		$result = $rslt->result_array();
+		return $result[0];
+	}
 
 	public function getClientsList(){
 		$this->db->select('*');
@@ -165,8 +173,8 @@ class Client_model extends CI_Model{
 //			$this->db->where('taking_date <=', $end_date);
 //		}
 //		if ($orderType==2){
-			$this->db->where('delevary_date >=', $start_date);
-			$this->db->where('delevary_date <=', $end_date);
+		$this->db->where('delevary_date >=', $start_date);
+		$this->db->where('delevary_date <=', $end_date);
 		//}
 		$rslt = $this->db->get();
 		$result = $rslt->result_array();

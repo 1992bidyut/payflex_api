@@ -166,6 +166,7 @@ class Order_model extends CI_Model {
 		return $result;
 	}
 
+
 	public function getProductBytxid($txid,$orderType){
 		$this->db->select('*');
 		$this->db->from('order_details');
