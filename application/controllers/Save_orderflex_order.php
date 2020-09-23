@@ -70,6 +70,8 @@ class Save_orderflex_order extends REST_Controller
 		$code=$client_code."-".$this->getServerDate().'-1';
 		$customer_order['trxid']=$customer_order['order_code'];
 		$customer_order['order_code']=$code;
+		$customer_order['plant_id']=$order_detail[0]['plant'];
+		$customer_order['insert_time']=$this->getInsertTime();
 		$order_index=$this->save_order_model->createdNewCustomerOrder($customer_order);
 			//echo $order_index;
 
@@ -119,6 +121,13 @@ class Save_orderflex_order extends REST_Controller
 		$getDate = strtotime($getDate);
 		$getDate = strtotime("-6 h", $getDate);
 		return $getDate=date("dmy", $getDate);
+	}
+
+	private function getInsertTime(){
+		$getDate= date("Y-m-d H:m:s");
+		$getDate = strtotime($getDate);
+		$getDate = strtotime("-6 h", $getDate);
+		return $getDate=date("Y-m-d H:m:s", $getDate);
 	}
 
 }

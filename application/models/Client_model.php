@@ -189,6 +189,39 @@ class Client_model extends CI_Model{
 		$result = $rslt->result_array();
 		return $result;
 	}
+	public function saveClientImagInfo($data){
+		$this->db->insert('tbl_image', $data);
+		$Info = $this->db->insert_id();
+		return $Info;
+	}
+
+	public function inactiveRelation($client_id){
+		$this->db->where('tbl_client_profile_img_relation.client_id', $client_id);
+		$data3['isActive']=0;
+		if ($this->db->update('tbl_client_profile_img_relation', $data3)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public function saveProfileImagRelation($data2){
+		$this->db->insert('tbl_payment_image_relation', $data2);
+		$Info = $this->db->insert_id();
+		return $Info;
+	}
+
+	public function getProfilePicture($client_id){
+		$this->db->select('tbl_image.image_name');
+		$this->db->from('tbl_client_profile_img_relation');
+		$this->db->join('tbl_image','tbl_image.id=tbl_client_profile_img_relation.image_id', 'left');
+		$this->db->where('tbl_client_profile_img_relation.client_id',$client_id);
+		$this->db->where('tbl_client_profile_img_relation.isActive','1');
+		$rslt = $this->db->get();
+		$result = $rslt->result_array();
+		return $result[0]['image_name'];
+	}
 
 }
 

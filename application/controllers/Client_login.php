@@ -55,6 +55,8 @@ class Client_login extends REST_Controller
 		$user_id=$userData[0]['id'];
 		$clientData=$this->login_model->getClientUserInfo($user_id);
 		$contact=$this->client_model->getClientContact($clientData[0]['client_id']);
+		$image_name=$this->client_model->getProfilePicture($clientData[0]['client_id']);
+		$clientData[0]['image_url']='https://payflex.onukit.com/total/asset/images/profileImg/'.$clientData[0]['client_id'].'/'.$image_name;
 		$clientData[0]['contacts']=$contact;
 		$this->response(json_encode($clientData[0]),202);
 	}

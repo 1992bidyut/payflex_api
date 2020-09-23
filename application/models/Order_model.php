@@ -119,6 +119,15 @@ class Order_model extends CI_Model {
 		return $forecastOrder;
 	}
 
+	public function getPlants(){
+		$this->db->select('*');
+		$this->db->from('plant_detail');
+		$rslt = $this->db->get();
+		$result = $rslt->result_array();
+		$que=$this->db->last_query();
+		return $result;
+	}
+
 	public function getClientOrders($id,$orderType,$start_date,$end_date){
 		$this->db->select('*');
 		$this->db->from('order_details');

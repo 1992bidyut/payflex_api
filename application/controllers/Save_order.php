@@ -63,6 +63,8 @@ class Save_order extends REST_Controller
 			'trxid' => $requestData['trxid'],
 			'taker_id' => $requestData['taker_id'],
 			'order_for_client_id' => $requestData['order_for_client_id'],
+			'plant_id'=>$order_Details[0]['plant'],
+			'insert_time'=>$this->getInsertTime()
 			);
 
 		$order_index=$this->save_order_model->createdNewCustomerOrder($orderData);
@@ -112,6 +114,12 @@ class Save_order extends REST_Controller
 		}
 
 		$this->response(json_encode($response), 202);
+	}
+	private function getInsertTime(){
+		$getDate= date("Y-m-d H:m:s");
+		$getDate = strtotime($getDate);
+		$getDate = strtotime("-6 h", $getDate);
+		return $getDate=date("Y-m-d H:m:s", $getDate);
 	}
 
 }
