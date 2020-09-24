@@ -64,7 +64,9 @@ class Save_order extends REST_Controller
 			'taker_id' => $requestData['taker_id'],
 			'order_for_client_id' => $requestData['order_for_client_id'],
 			'plant_id'=>$order_Details[0]['plant'],
-			'insert_time'=>$this->getInsertTime()
+			'insert_time'=>$this->getInsertTime(),
+			'isEditable'=>0,
+			'isSubmitted'=>1
 			);
 
 		$order_index=$this->save_order_model->createdNewCustomerOrder($orderData);

@@ -293,6 +293,20 @@ class Order_model extends CI_Model {
 		}
 	}
 
+	public function isEditAllowed($id){
+		$this->db->select('*');
+		$this->db->from('tbl_customer_order');
+		$this->db->where('tbl_customer_order.id', $id);
+		$this->db->where('tbl_customer_order.isEditable', 1);
+		$rslt = $this->db->get();
+		$result = $rslt->result_array();
+		if (!empty($result)) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 }
 /*SELECT
 label1.id AS label1_id,

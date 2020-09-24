@@ -35,6 +35,15 @@ class Payment_model extends CI_Model
 			return false;
 		}
 	}
+	public function updateOldPayment($trxid,$data){
+		$this->db->where('tbl_payment.trxid',$trxid);
+		if ($this->db->update('tbl_payment', $data)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 	public function isPaymentReferenceExist($refNo){
 		$this->db->select('*');
@@ -125,6 +134,47 @@ class Payment_model extends CI_Model
 			return true;
 		}
 	}
+
+	public function isReplaceAllowed($trxid){
+		$this->db->select('*');
+		$this->db->from('tbl_payment');
+		$this->db->where('tbl_payment.trxid', $trxid);
+		$this->db->where('tbl_payment.isEditable', 1);
+		$rslt = $this->db->get();
+		$result = $rslt->result_array();
+		if (!empty($result)) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	public function getPaymentID($trxid){
+		$this->db->select('*');
+		$this->db->from('tbl_payment');
+		$this->db->where('tbl_payment.trxid', $trxid);
+		$rslt = $this->db->get();
+		$result = $rslt->result_array();
+		if (!empty($result)) {
+			return $result[0]['id'];
+		}else{
+			return null;
+		}
+	}
+	public function getPaymentImagRelation($pay_id){
+		$this->db->select('*');
+		$this->db->from('tbl_payment_image_relation');
+		$this->db->where('tbl_payment_image_relation.payment_id', $pay_id);
+		$rslt = $this->db->get();
+		$result = $rslt->result_array();
+//		echo print_r($result);
+		if (!empty($result)) {
+			return $result[0];
+		}else{
+			return null;
+		}
+	}
+
 
 // 	SELECT tbl_payment.*,
 // tbl_financial_institution_list.bank_name,

@@ -22,7 +22,7 @@ class Update_order extends REST_Controller
 	protected $rest_format   = 'application/json';
 
 	function _perform_library_auth( $email = '', $password = NULL)
-	{			
+	{
 		$CI = get_instance();
 		$CI->load->library('encrypt');
 		$CI->load->model('login_model');
@@ -30,10 +30,10 @@ class Update_order extends REST_Controller
 		$password = sha1($password);
 
 		$isValidUser = $this->login_model->getUser($email, $password);
-		
+
 		if(empty($isValidUser)){
 			$resonseText = "errorLogin";
-			$this->response($resonseText, 401); 
+			$this->response($resonseText, 401);
 			return false;
 		}
 		else{
@@ -55,15 +55,15 @@ class Update_order extends REST_Controller
 		$i = 0;
 		$res = false;
 		$response = array();
-		
-		    $total_amount=0;
-		    $order_index=$this->update_order_model->getCustomerOrderId($requestData[0]['txid']);
-		    
+
+		$total_amount=0;
+		$order_index=$this->update_order_model->getCustomerOrderId($requestData[0]['txid']);
+		if ($this->order_model->isEditAllowed($order_index)){
 			for ($i=0;$i<$length;$i++){
-			    
-			    $price=$this->order_model->getProductRate($requestData[$i]['product_id']);//amount add
+
+				$price=$this->order_model->getProductRate($requestData[$i]['product_id']);//amount add
 				$ordered_amount=$requestData[$i]['quantityes']*$price[0]['p_wholesalePrice'];//amount add
-				
+
 				$data = array(
 					'product_id' => $requestData[$i]['product_id'],
 					'quantityes' => $requestData[$i]['quantityes'],
@@ -88,9 +88,10 @@ class Update_order extends REST_Controller
 				}
 				$total_amount=$total_amount+$ordered_amount;
 			}
-			
+
 			//update customer order
 			$orderData['total_costs']=$total_amount;
+			$orderData['isEditable']=0;
 			$this->update_order_model->updateCustomerOrderTable($orderData,$order_index);
 
 			if(!empty($res)){
@@ -99,8 +100,10 @@ class Update_order extends REST_Controller
 			} else {
 				$response['message'] = "Failed to updated data";
 			}
-		
-
-		$this->response(json_encode($response), 202);
+			$this->response(json_encode($response), 202);
+		}else{
+			$response['message'] = "This order is locked!";
+			$this->response(json_encode($response), 203);
+		}
 	}
 }

@@ -72,6 +72,8 @@ class Save_orderflex_order extends REST_Controller
 		$customer_order['order_code']=$code;
 		$customer_order['plant_id']=$order_detail[0]['plant'];
 		$customer_order['insert_time']=$this->getInsertTime();
+		$customer_order['isEditable']=1;
+		$customer_order['isSubmitted']=0;
 		$order_index=$this->save_order_model->createdNewCustomerOrder($customer_order);
 			//echo $order_index;
 
