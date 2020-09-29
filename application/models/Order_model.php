@@ -307,6 +307,19 @@ class Order_model extends CI_Model {
 		}
 	}
 
+	public function updateCustomerSubmit($orderCode){
+		$data=array();
+		$data['isSubmitted']=1;
+		$data['isEditable']=0;
+		$this->db->where('tbl_customer_order.order_code', $orderCode);
+		if ($this->db->update('tbl_customer_order', $data)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 }
 /*SELECT
 label1.id AS label1_id,
