@@ -207,7 +207,7 @@ class Client_model extends CI_Model{
 	}
 
 	public function saveProfileImagRelation($data2){
-		$this->db->insert('tbl_payment_image_relation', $data2);
+		$this->db->insert('tbl_client_profile_img_relation', $data2);
 		$Info = $this->db->insert_id();
 		return $Info;
 	}
@@ -220,7 +220,11 @@ class Client_model extends CI_Model{
 		$this->db->where('tbl_client_profile_img_relation.isActive','1');
 		$rslt = $this->db->get();
 		$result = $rslt->result_array();
-		return $result[0]['image_name'];
+		if (empty($result)) {
+			return null;
+		}else{
+			return $result[0]['image_name'];
+		}
 	}
 
 }

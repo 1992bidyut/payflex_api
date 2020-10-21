@@ -103,7 +103,9 @@ class Update_order extends REST_Controller
 			$this->response(json_encode($response), 202);
 		}else{
 			$response['message'] = "This order is locked!";
-			$this->response(json_encode($response), 203);
+			$this->response(json_encode($response), 202);
 		}
+		
+		
 	}
 }

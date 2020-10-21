@@ -175,7 +175,6 @@ class Payment_model extends CI_Model
 		}
 	}
 
-
 // 	SELECT tbl_payment.*,
 // tbl_financial_institution_list.bank_name,
 // tbl_payment_mode.methode_name,tbl_payment_mode.custom_methode

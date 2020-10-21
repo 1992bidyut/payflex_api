@@ -64,8 +64,8 @@ class GetOrderPaymentList extends REST_Controller
 		
 		$length = count($payment_list);
 		for ($i=0;$i<$length;$i++){
-//			 $payment_list[$i]['image_url']='http://demo.onuserver.com/payFlex/asset/images/'.((string)$client_id).'/'.$payment_list[$i]['image_name'];//demo server
-			$payment_list[$i]['image_url']='https://payflex.onukit.com/total/asset/images/payment/'.((string)$client_id).'/'.$payment_list[$i]['image_name'];//live server
+			 $payment_list[$i]['image_url']='http://demo.onuserver.com/payFlex/asset/images/'.((string)$client_id).'/'.$payment_list[$i]['image_name'];//demo server
+//			$payment_list[$i]['image_url']='https://payflex.onukit.com/total/asset/images/payment/'.((string)$client_id).'/'.$payment_list[$i]['image_name'];//live server
 		}
 
 		$response['code']=202;

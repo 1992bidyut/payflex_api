@@ -63,9 +63,9 @@ class ApplicationSetupAndCheck extends REST_Controller
 			$system_param['isUpdatedApp']=true;
 			$system_param['isSystemUnderMaintenance']=false;
 			$system_param['lastVersionOfApp']='1v1';
-			$system_param['updatedAppLink']='';
+			$system_param['updatedAppLink']='https://drive.google.com/drive/folders/1w5TZJ-0NISdrIoNfUI3pCx6nfUtcDwZk?usp=sharing';
 			$system_param['isMessageForUser']=false;
-			$system_param['customWebViewURL']='';
+			$system_param['customWebViewURL']='https://payflex.onukit.com/total/';
 		}else{
 			$response['code']=202;
 			$response['message']='Not Successfully!';
@@ -73,7 +73,7 @@ class ApplicationSetupAndCheck extends REST_Controller
 			$system_param['isUpdatedApp']=false;
 			$system_param['isSystemUnderMaintenance']=false;
 			$system_param['lastVersionOfApp']='1v1';
-			$system_param['updatedAppLink']='';
+			$system_param['updatedAppLink']='https://drive.google.com/drive/folders/1w5TZJ-0NISdrIoNfUI3pCx6nfUtcDwZk?usp=sharing';
 			$system_param['isMessageForUser']=true;
 			$system_param['customWebViewURL']='';
 		}

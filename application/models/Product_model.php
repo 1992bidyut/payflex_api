@@ -16,6 +16,8 @@ public function getProductDetailsList(){
 		$this->db->from('product_details');
 		$this->db->JOIN('product_type','product_details.p_type=product_type.id','left');
 		$this->db->JOIN('tbl_product_price','product_details.id=tbl_product_price.product_id','left');
+		$this->db->where('tbl_product_price.is_active','1');
+		$this->db->order_by('product_details.id');
 		$rslt = $this->db->get();
 		$result = $rslt->result_array();
 		return $result;

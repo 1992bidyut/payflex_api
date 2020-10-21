@@ -189,7 +189,7 @@ class Order_model extends CI_Model {
 	public function getProductRate($product_id){//amount add
 		$this->db->select('*');
 		$this->db->from('tbl_product_price');
-		$this->db->where('tbl_product_price.id',$product_id);
+		$this->db->where('tbl_product_price.product_id',$product_id);
 		$this->db->where('tbl_product_price.is_active', '1');
 		$rslt = $this->db->get();
 		$result = $rslt->result_array();

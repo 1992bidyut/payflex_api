@@ -57,7 +57,7 @@ class OrderReviseSubmit extends REST_Controller
 		$requestData = json_decode(file_get_contents('php://input'),true);
 		$response=array();
 		$orderCode=$requestData['order_code'];
-		echo $orderCode;
+		// echo $orderCode;
 		if ($this->order_model->updateCustomerSubmit($orderCode)){
 			$response['code']=202;
 			$response['message']='Successfully revised and submitted!';
