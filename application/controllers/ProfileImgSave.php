@@ -69,8 +69,8 @@ class ProfileImgSave extends CI_Controller
 				$server_url= dirname(__FILE__);
 				// die($server_url);
 				//$folder_path = $server_url.'//..//..//..//recorder.onuserver.com';
-//				$folder_path = '/home/demoonuserver/public_html/payFlex/asset/images';//demo server
-				$folder_path = '/srv/users/serverpilot/apps/payflex/public/total/asset/images/profileImg';//live sev=rver
+				$folder_path = '/home/demoonuserver/public_html/payFlex/asset/images/profileImg';//demo server
+//				$folder_path = '/srv/users/serverpilot/apps/payflex/public/total/asset/images/profileImg';//live sev=rver
 				//check if is_dir returns valid path for our folder path so far.
 
 				$file_path = $folder_path .'/'. ((string)$client_id);
