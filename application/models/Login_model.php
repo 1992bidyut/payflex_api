@@ -53,8 +53,9 @@ class Login_model extends CI_Model{
 		$Info = $this->db->insert_id();
 		return $Info;
 	}
-	public function updateDeviceMap($id,$updateDate){
-		$this->db->where('tbl_client_device_map.id', $id);
+	public function updateDeviceMap($client_id,$android_id,$updateDate){
+		$this->db->where('tbl_client_device_map.client_id', $client_id);
+		$this->db->where('tbl_client_device_map.android_id', $android_id);
 		if ($this->db->update('tbl_client_device_map', $updateDate)) {
 			return true;
 		}
@@ -67,16 +68,18 @@ class Login_model extends CI_Model{
 		$this->db->select('*');
 		$this->db->from('tbl_client_device_map');
 		$this->db->where('tbl_client_device_map.client_id', $clientId);
+		$this->db->where('tbl_client_device_map.isValided', 1);
 		$rslt = $this->db->get();
 		$result = $rslt->result_array();
 		return $result;
 	}
 
-	public function isDeviceMapExist($client_id,$android_id){
+	public function isDeviceMapExist($client_id,$android_id,$flag){
 		$this->db->select();
 		$this->db->from('tbl_client_device_map');
 		$this->db->where('tbl_client_device_map.client_id', $client_id);
 		$this->db->where('tbl_client_device_map.android_id', $android_id);
+		$this->db->where('tbl_client_device_map.isValided', $flag);
 		$rslt = $this->db->get();
 		$result = $rslt->row();
 		if (isset($result)){

@@ -67,6 +67,8 @@ class OTP_verification extends REST_Controller
 		$otp=$requestData['otp'];
 		$response=array();
 		if ($this->login_model->getOPPValidation($client_id,$android_id,$otp)){
+			$device_map['isValided']=1;
+			$this->login_model->updateDeviceMap($client_id,$android_id,$device_map);
 			$response['code']=202;
 			$response['message']='Valid OTP!';
 			$response['isValid']=true;
