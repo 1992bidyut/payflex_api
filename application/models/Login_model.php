@@ -48,4 +48,56 @@ class Login_model extends CI_Model{
 		$result = $rslt->result_array();
 		return $result;
 	}
+	public function insertDeviceMap($data){
+		$this->db->insert('tbl_client_device_map', $data);
+		$Info = $this->db->insert_id();
+		return $Info;
+	}
+	public function updateDeviceMap($id,$updateDate){
+		$this->db->where('tbl_client_device_map.id', $id);
+		if ($this->db->update('tbl_client_device_map', $updateDate)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public function getAllDeviceMap($clientId){
+		$this->db->select('*');
+		$this->db->from('tbl_client_device_map');
+		$this->db->where('tbl_client_device_map.client_id', $clientId);
+		$rslt = $this->db->get();
+		$result = $rslt->result_array();
+		return $result;
+	}
+
+	public function isDeviceMapExist($client_id,$android_id){
+		$this->db->select();
+		$this->db->from('tbl_client_device_map');
+		$this->db->where('tbl_client_device_map.client_id', $client_id);
+		$this->db->where('tbl_client_device_map.android_id', $android_id);
+		$rslt = $this->db->get();
+		$result = $rslt->row();
+		if (isset($result)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	public function getOPPValidation($client_id,$android_id,$otp){
+		$this->db->select();
+		$this->db->from('tbl_client_device_map');
+		$this->db->where('tbl_client_device_map.client_id', $client_id);
+		$this->db->where('tbl_client_device_map.android_id', $android_id);
+		$this->db->where('tbl_client_device_map.last_otp', $otp);
+		$rslt = $this->db->get();
+		$result = $rslt->row();
+		if (isset($result)){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
