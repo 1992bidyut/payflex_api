@@ -21,6 +21,7 @@ class ApplicationSetupAndCheck extends REST_Controller
 		$this->load->model('login_model');
 		$this->load->model('offer_model');
 	}
+	//
 
 	protected $rest_format   = 'application/json';
 
